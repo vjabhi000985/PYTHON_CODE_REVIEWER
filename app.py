@@ -119,7 +119,7 @@ elif input_type == "File Upload":
 elif input_type == "Image Upload":
     uploaded_image = st.file_uploader("Upload an image containing code", type=["png", "jpg", "jpeg"])
     if uploaded_image:
-        st.image(uploaded_image, caption="Uploaded Image", use_column_width=True)
+        st.image(uploaded_image, caption="Uploaded Image", use_container_width=True)
         with st.spinner("Converting image to text..."):
             code_to_review = image_to_text(uploaded_image)
             if code_to_review:  # Only proceed if conversion was successful
