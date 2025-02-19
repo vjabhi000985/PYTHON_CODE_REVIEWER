@@ -3,6 +3,7 @@ import json
 import streamlit as st
 import google.generativeai as genai
 from PIL import Image
+import easyocr
 from dotenv import load_dotenv
 
 # Load the environment variable
@@ -44,6 +45,13 @@ st.markdown("""
 # Configure Gemini API Key
 genai.configure(api_key=api_key) 
 
+# Initialize EasyOCR reader (with caching)
+@st.cache_resource
+def load_easyocr_model():
+    return easyocr.Reader(['en'])  # Specify languages as needed
+
+reader = load_easyocr_model()
+
 def extract_code(uploaded_file):
     if uploaded_file.name.endswith(".py"):
         return uploaded_file.read().decode("utf-8")
@@ -54,6 +62,18 @@ def extract_code(uploaded_file):
         ]
         return "\n".join(["".join(cell) for cell in code_cells])
     else:
+        return None
+
+def image_to_text(uploaded_image):
+    try:
+        image = Image.open(uploaded_image)
+        result = reader.readtext(image)
+        extracted_text = ""
+        for (bbox, text, prob) in result:
+            extracted_text += text + "\n"  # Combine text from all bounding boxes
+        return extracted_text
+    except Exception as e:
+        st.error(f"Error during image to text conversion: {e}") # Show error in Streamlit
         return None
 
 def review_code(user_prompt: str) -> str:
@@ -100,7 +120,13 @@ elif input_type == "Image Upload":
     uploaded_image = st.file_uploader("Upload an image containing code", type=["png", "jpg", "jpeg"])
     if uploaded_image:
         st.image(uploaded_image, caption="Uploaded Image", use_column_width=True)
-        st.warning("Image-to-code conversion is not implemented yet.")
+        with st.spinner("Converting image to text..."):
+            code_to_review = image_to_text(uploaded_image)
+            if code_to_review:  # Only proceed if conversion was successful
+                st.subheader("📌 Extracted Code from Image")
+                st.code(code_to_review, language="python")
+            else:
+                code_to_review = "" # Clear code to review if conversion fails
 
 if st.button("Review Code"):
     if not code_to_review.strip():
