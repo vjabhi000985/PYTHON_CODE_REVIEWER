@@ -2,3 +2,4 @@ python-dotenv
 streamlit
 google-generativeai
 easyocr
+numpy
