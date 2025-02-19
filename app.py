@@ -125,9 +125,9 @@ elif input_type == "Image Upload":
         with st.spinner("Converting image to text..."):
             code_to_review = image_to_text(uploaded_image)
             if code_to_review:  # Only proceed if conversion was successful
-                st.subheader("📌 Extracted Code from Image")
-                st.code(code_to_review, language="python")
+                st.success("Code extracted successfully!")
             else:
+                st.error("Code extraction failed. Please try a different image.")
                 code_to_review = "" # Clear code to review if conversion fails
 
 if st.button("Review Code"):
