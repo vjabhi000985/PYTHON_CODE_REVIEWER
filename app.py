@@ -5,6 +5,7 @@ import google.generativeai as genai
 from PIL import Image
 import easyocr
 from dotenv import load_dotenv
+import numpy as np
 
 # Load the environment variable
 load_dotenv()
@@ -67,6 +68,7 @@ def extract_code(uploaded_file):
 def image_to_text(uploaded_image):
     try:
         image = Image.open(uploaded_image)
+        image = np.array(image)
         result = reader.readtext(image)
         extracted_text = ""
         for (bbox, text, prob) in result:
