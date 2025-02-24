@@ -10,8 +10,12 @@ Python Code Reviewer is a web application that leverages Google's Generative AI 
 - **Multi-Language Support:** The app can review code written in JavaScript, Python, and Java.
 - **User-Friendly Interface:** Built using Streamlit for a smooth and interactive user experience.
 - **Generative AI Integration:** Powered by Google's Generative AI to provide accurate and efficient code feedback.
+- **Image to Code Extraction:** Allows users to upload images of handwritten or printed code. The app then processes these images and converts them into editable Python code.
+
+- **Image-Based Code Review:** Review process to handle code extracted from images.
 
 ## Screenshot
+
 **Homepage** : ![Image](https://github.com/user-attachments/assets/266c525b-309d-452e-b476-74b5f1bd3e99)
 
 ## Deployment
@@ -68,10 +72,6 @@ We are continuously working to improve the Python Code Reviewer. Some future enh
 - Support for More Languages: Expanding the code review functionality to support other programming languages like JavaScript, C++, and Go.
 
 - Integration with IDEs: Adding the ability to integrate the app directly with popular IDEs like VS Code and PyCharm for real-time code reviews.
-
-- Image to Code Extraction: Implementing functionality that allows users to upload images of handwritten or printed code, which the app will then process and convert into editable Python code.
-
-- Image-Based Code Review: Expanding the review process to work with code extracted from images, enabling the app to provide detailed bug reports and suggestions for any code embedded in image format.
 
 ## Contributions
 
